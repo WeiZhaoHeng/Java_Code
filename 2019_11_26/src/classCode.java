@@ -9,7 +9,7 @@ public class classCode {
     public static void main(String[] args) {
 
 
-    MyArrayList myArrayList = new MyArrayList();
+    MyArrayList1 myArrayList = new MyArrayList1();
         myArrayList.add(0,12);
         myArrayList.add(0,13);
         myArrayList.add(0,14);
@@ -18,6 +18,7 @@ public class classCode {
         myArrayList.add(0,17);
         myArrayList.add(0,18);
         myArrayList.display();
+        System.out.println("========================================");
         myArrayList.clear();
         myArrayList.display();
     }
