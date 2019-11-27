@@ -3,20 +3,21 @@
  * Description:
  * User：WeiZhaoheng
  * Date: 2019/11/27
- * Time: 17:17
+ * Time: 22:41
  */
-class ListNode{
+
+class List_Node {
     public int data;
     public List_Node next;
-    public ListNode(int data){
+    public List_Node(int data){
         this.data = data;
         this.next = null;
     }
 }
-class MySingleList {
 
+class MySingList {
     public List_Node head;
-    public MySingleList(){
+    public MySingList(){
         this.head = null;
     }
 
@@ -24,14 +25,14 @@ class MySingleList {
     public void addFirst(int data){
         List_Node node = new List_Node(data);
         if(this.head == null){
-            this.head = node;
+            this.head = node ;
         }else {
             node.next = this.head;
             this.head = node;
         }
     }
 
-    //尾插法
+    //插尾法
     public void addLast(int data){
         List_Node node = new List_Node(data);
         List_Node cur = head.next;
@@ -45,7 +46,7 @@ class MySingleList {
         }
     }
 
-    //打印链表数据
+    //打印链表
     public void display(){
         if(this.head == null){
             return;
@@ -65,31 +66,31 @@ class MySingleList {
      */
     private List_Node searchIndex(int index){
         List_Node prev = this.head;
-        int count =0;
-        while(count < index-1){
+        int count = 0;
+        while(count <index-1){
             prev = prev.next;
             count++;
         }
         return prev;
     }
-    //插入到 index 位置
     public boolean addIndex(int index,int data){
-        if(index < 0||index >getLength()){
+        if(index < 0||index>getLength()){
             return false;
         }
         if(index == 0){
-            addLast(data);
+            addFirst(data);
             return true;
         }
         List_Node prev = searchIndex(index);
         List_Node node = new List_Node(data);
         node.next = prev.next;
-        prev.next = node ;
+        prev.next = node;
         return true;
     }
+
     //计算链表的长度
     public int getLength(){
-        int count =0;
+        int count = 0;
         List_Node cur = this.head;
         while(cur != null){
             count++;
