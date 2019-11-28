@@ -14,15 +14,20 @@ public class Test {
         mySingleList.addFirst(3);
         mySingleList.addFirst(4);
         mySingleList.addFirst(5);
-        mySingleList.addFirst(6);
+        mySingleList.addFirst(2);
         mySingleList.display();
         mySingleList.addLast(2);
         mySingleList.addLast(3);
         mySingleList.addLast(4);
         mySingleList.addLast(5);
-        mySingleList.addLast(6);
+        mySingleList.addLast(2);
         mySingleList.display();
         mySingleList.addIndex(6,1);
+        mySingleList.display();
+        mySingleList.removeAllKey(2);
+        mySingleList.display();
+        System.out.println("================================");
+        mySingleList.clear();
         mySingleList.display();
     }
 }
