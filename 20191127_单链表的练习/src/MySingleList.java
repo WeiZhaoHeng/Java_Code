@@ -177,7 +177,7 @@ class MySingleList {
         this.head = null;
     }
 
-    //反转一个单链表(会产生一个新的头节点需要用display1进行打印)
+/*    //反转一个单链表(会产生一个新的头节点需要用display1进行打印)
     public ListNode reverseList0(){
         ListNode prev = null;//
         ListNode cur = this.head;
@@ -321,7 +321,149 @@ class MySingleList {
         return slow;
 
 
+    }*/
+//逆置要用display1打印
+    public ListNode reversList0(){
+        ListNode prev = null;
+        ListNode cur = this.head;
+        ListNode newHead = null;
+        while(cur != null){
+            ListNode curNext = cur.next;
+            if(curNext == null)
+                newHead = cur;
+            cur.next = prev;
+            prev = cur;
+            cur = curNext;
+        }
+        return newHead;
     }
+
+    public void display1(ListNode newHead){
+        if(newHead == null){
+            return;
+        }
+        ListNode cur = newHead;
+        while(cur != null){
+            System.out.print(cur.data+" ");
+            cur = cur.next;
+        }
+        System.out.println();
+    }
+
+    //逆置，选择是与否要打印
+    public void reverseList1(boolean want){
+        ListNode prev = null;
+        ListNode newHead = null;
+        ListNode cur = this.head;
+        while(cur != null){
+            ListNode curNext = cur.next;
+            if(curNext == null){
+                newHead = cur;
+            }
+            cur.next = prev;
+            prev = cur;
+            cur = curNext;
+        }
+        if(want){
+            cur = newHead;
+            while(cur != null){
+                System.out.print(cur.data+" ");
+                cur = cur.next;
+            }
+            System.out.println();
+        }
+    }
+
+    //逆置 可以直接用display打印
+    public void reverseList2(){
+        ListNode prev = null;
+        ListNode cur = this.head;
+        while(cur != null){
+            ListNode curNext = cur.next;
+            cur.next = prev;
+            prev = cur;
+            cur = curNext;
+        }
+        this.head = prev;
+    }
+
+    //利用头插法完成逆置
+
+    public void reverseList3(){
+
+    }
+
+
+    // 给定一个带有头结点 head 的非空单链表，返回链表的中间结点。如果有两个中间结点，则返回第二个中间结点
+    //第一种做法
+    public ListNode middleNode1(){
+        ListNode cur = this.head;
+        int count =0;
+        int tmp = getLength()/2;
+        while(count != tmp){
+            cur = cur.next;
+            count++;
+        }
+        return cur;
+    }
+
+    //case 2:
+    public ListNode middleNode2(){
+        ListNode fast = this.head;
+        ListNode slow = this.head;
+        while(fast !=null && fast.next != null){
+            fast = fast.next.next;
+            slow =slow.next;
+        }
+        return slow;
+    }
+
+    //输出倒数第k个节点
+    public ListNode findK1(int k){
+        ListNode fast = this.head;
+        ListNode slow = this.head;
+        if(k<=0||k>getLength()){
+            System.out.println("该节点超出范围" );
+            return null;
+        }else{
+            while(k-1>0){
+                fast = fast.next;
+                k--;
+            }
+            while(fast.next != null){
+                fast = fast.next;
+                slow = slow.next;
+            }
+        }
+        return slow;
+    }
+
+    //case 2:
+    public ListNode findK2(int k){
+        ListNode fast = this.head;
+        ListNode slow = this.head;
+        if(k<=0||this.head == null){
+            System.out.println("该节点超出范围" );
+            return null;
+        }
+        while(k-1>0){
+            if(fast.next != null){
+                fast = fast.next;
+                k--;
+            }
+            else{
+                System.out.println("该节点超出范围");
+                return null;
+            }
+        }
+        while(fast.next != null){
+            fast = fast.next;
+            slow = slow.next;
+        }
+        return slow;
+    }
+
+
 
 
 }
