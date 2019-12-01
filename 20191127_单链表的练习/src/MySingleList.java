@@ -462,6 +462,159 @@ class MySingleList {
         }
         return slow;
     }
+	
+	
+	    //找到以 X 为基准分割列表
+    public ListNode partition(int x){
+        ListNode bs = null;
+        ListNode be = null;
+        ListNode as = null;
+        ListNode ae = null;
+        ListNode cur = this.head;
+        while(cur != null){
+            if(cur.data < x){
+                //是不是第一次插入
+                if(bs == null){
+                    bs = cur;
+                    be = cur;
+                }else{
+                    be.next = cur ;
+                    be = be.next;
+                }
+            }else{
+                //是不是第一次插入
+                if( as == null){
+                    as = cur;
+                    ae = cur;
+                }else{
+                    ae.next = cur;
+                    ae = ae.next;
+                }
+            }
+            cur = cur.next;
+        }
+        //第一个去区间没有数据
+        if(bs == null){
+            return as;
+        }
+        be.next = as;
+        if(as != null){
+            as.next = null;
+        }
+        return bs;
+    }
+
+    //删除重复的节点.eg:1->2->3->3->4->4->5 ==》1->2->5
+    public ListNode deleteDuplication(){
+        ListNode cur = this.head;
+        ListNode newHead = new ListNode(-1);
+        ListNode tmp = newHead;
+        while(cur != null){
+            //重复的节点
+            if(cur.next != null&&cur.data == cur.next.data){
+                //每一次都需要判断 cur.next
+                while(cur.next != null&&cur.data == cur.next.data){
+                    cur = cur.next;
+                }
+                cur = cur.next;
+            }else{
+                tmp.next = cur;
+                tmp = tmp.next;
+                cur = cur.next;
+            }
+        }
+        //最后一个节点如果也是重复的
+        //需要将 tmp.next = null
+        tmp.next = null;
+        return newHead.next;
+    }
+
+    //判断回文
+    public boolean chkPalindrome(){
+        if(this.head == null){
+            return false;
+        }
+        if(this.head.next == null){
+            return true;
+        }
+        //找中间节点
+        ListNode fast = this.head;
+        ListNode slow = this.head;
+        while(fast != null&&fast.next != null){
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        //反转
+        ListNode cur = slow.next;
+        while(cur != null){
+            ListNode curNext = cur.next;
+            cur.next = slow;
+            slow = cur;
+            cur = curNext;
+        }
+        //判断回文
+        while(slow != this.head){
+            if(slow.data != this.head.data){
+                return false;
+            }
+            //针对于偶数个节点的判断
+            if(this.head.next == slow){
+                return true;
+            }
+            slow = slow.next;
+            this.head = this.head.next;
+        }
+        return true;
+    }
+
+    //创造一个环
+    public void creatCycle(){
+        ListNode cur = this.head;
+        while(cur.next != null){
+            cur = cur.next;
+
+        }
+        cur.next = this.head.next.next;
+    }
+    //给一个单链表，判断是否有环
+    public boolean hasCycle(){
+        if(this.head == null){
+            return false;
+        }
+        ListNode fast = this.head;
+        ListNode slow = this.head;
+        while(fast != null&&fast.next != null){
+            fast = fast.next.next;
+            slow = slow.next;
+            if(slow == fast){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //找有环的链表的入口节点
+    public ListNode detectCycle(){
+        if(this.head == null){
+            return null;
+        }
+        ListNode fast = this.head;
+        ListNode slow = this.head;
+        while(fast != null&&fast.next != null){
+            fast = fast.next.next;
+            slow = slow.next;
+            if(slow == fast){
+                slow = this.head;
+                while(slow != fast){
+                    slow = slow.next;
+                    fast = fast.next;
+                }
+                return slow;
+            }
+
+        }
+        return null;
+    }
 
 
 
