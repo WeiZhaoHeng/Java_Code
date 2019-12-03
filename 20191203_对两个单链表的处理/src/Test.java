@@ -103,7 +103,7 @@ public class Test {
         System.out.println(node.data);*/
         System.out.println("=======================");
         ListNode node = mergeTwoLists(mySingList1.head,mySingList2.head);
-        MySingList.display1(node);
+
 
     }
 }

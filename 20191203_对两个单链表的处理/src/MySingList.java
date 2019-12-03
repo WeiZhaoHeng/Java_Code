@@ -14,6 +14,11 @@ class ListNode{
         this.next = null;
         this.random = null;
     }
+    public ListNode(int data,ListNode next,ListNode random){
+        this.data = data;
+        this.next = next;
+        this.random = null;
+    }
 }
  class MySingList {
     public ListNode head;
@@ -55,5 +60,36 @@ class ListNode{
             System.out.println();
          }
 
+     }
+
+     public ListNode copyRandomLists(ListNode head){
+        if(head == null){
+            return null;
+        }
+        ListNode cur = head;
+        while(cur !=null){
+            ListNode node = new ListNode(cur.data ,cur.next,null);
+            ListNode tmp = cur.next;
+            cur.next = node;
+            cur = tmp;
+        }
+        cur = head;
+        while(cur != null){
+            if(cur.random != null){
+                cur.next.random = cur.random.next;
+                cur = cur.next.next;
+            }else{
+                cur = cur.next.next;
+            }
+        }
+        cur = head;
+        ListNode newHead = cur.next;
+        while(cur !=null){
+            ListNode tmp = cur.next;
+            cur.next = cur.next.next;
+            cur = tmp;
+
+        }
+        return newHead;
      }
 }
