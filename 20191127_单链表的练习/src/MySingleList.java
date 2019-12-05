@@ -13,6 +13,343 @@ class ListNode{
         this.next = null;
     }
 }
+class MySingleList{
+    public ListNode head;
+    public MySingleList(){
+        this.head = null;
+    }
+
+    //打印链表
+    public void display(){
+        if(this.head == null){
+            System.out.println("该链表为空");
+        }else{
+            ListNode cur = this.head;
+            while(cur != null){
+                System.out.print(cur.data+" ");
+                cur = cur.next;
+            }
+            System.out.println();
+        }
+    }
+    //打印指定ListNode的链表
+    public void display1(ListNode head){
+        if(head == null){
+            System.out.println("空链表");
+            return;
+        }
+        ListNode cur = head;
+        while(cur != null){
+            System.out.print(cur.data+" ");
+            cur = cur.next;
+        }
+        System.out.println();
+    }
+
+    //头插法
+    public void addFirst(int data){
+        ListNode node = new ListNode(data);
+        if(this.head == null){
+            this.head = node;
+        }else{
+            node.next = this.head;
+            this.head = node;
+        }
+    }
+    //尾插法
+    public void addLast(int data){
+        ListNode node = new ListNode(data);
+        if(this.head == null){
+            this.head = node;
+        }else{
+            ListNode cur = this.head;
+            while(cur.next != null){
+                cur = cur.next;
+            }
+            cur.next = node;
+        }
+    }
+
+    //计算长度
+    public int getLength(){
+        int count = 0;
+        if(this.head == null){
+            return count;
+        }
+        ListNode cur = this.head;
+        while (cur != null) {
+            count++;
+            cur = cur.next;
+        }
+        return count;
+    }
+
+    //查找index 前一个节点
+    private ListNode searchIndex(int index){
+        ListNode prev = this.head;
+        while(index - 1> 0){
+            prev = prev.next;
+            index--;
+        }
+        return prev;
+    }
+
+    //index 位置插入
+    public void addIndex(int index,int data){
+        if(index < 0 || index > getLength()){
+            System.out.println("位置不合法");
+            return;
+        }
+        ListNode node = new ListNode(data);
+        if(index == 0){
+            addFirst(data);
+            return;
+        }
+        if(index == getLength()){
+            addLast(data);
+            return;
+        }
+        ListNode prev = searchIndex(index);
+        node.next = prev.next;
+        prev.next = node;
+    }
+
+    //查找关键字key
+    public ListNode findKey(int key){
+        if(this.head == null){
+            System.out.println("链表为空");
+            return null;
+        }
+        ListNode cur = this.head;
+        while(cur != null){
+            if(cur.data == key){
+                return cur;
+            }
+            cur = cur.next;
+        }
+        return null;
+    }
+
+
+    //找前驱
+    private ListNode searchBefore(int key){
+        ListNode prev = this.head;
+        while(prev.next != null){
+            if(prev.next.data == key){
+                return prev;
+            }
+            prev = prev.next;
+        }
+        return null;
+    }
+    //删除关键字 key
+    public void remove(int key){
+        if(this.head == null){
+            return ;
+        }
+        if(this.head.data == key){
+            this.head = this.head.next;
+            return;
+        }
+        ListNode prev = searchBefore(key);
+        if(prev == null){
+            System.out.println("没有要删除的节点");
+            return ;
+        }
+        prev.next = prev.next.next;
+    }
+
+    //删除所有key
+    public ListNode removeAllKey(int key){
+        if(this.head == null){
+            System.out.println("链表为空");
+            return null;
+        }
+        ListNode cur = this.head.next;
+        ListNode prev = this.head;
+        while(cur != null){
+            if(cur.data == key){
+                prev.next = cur.next;
+                cur = cur.next;
+            }else{
+                prev = cur;
+                cur = cur.next;
+            }
+        }
+        if(this.head.data == key){
+            this.head = this.head.next;
+        }
+        return this.head;
+    }
+
+    //清空链表
+    public void clear(){
+        this.head = null;
+    }
+
+    //反转链表
+    public ListNode reverse(){
+        if(this.head == null){
+            System.out.println("空链表");
+            return null;
+        }
+        ListNode prev = null;
+        ListNode cur = this.head;
+        ListNode newHead = null;
+        while(cur != null){
+            ListNode curNext = cur.next;
+            if(curNext == null){
+                newHead = cur;
+            }
+            cur.next = prev;
+            prev = cur;
+            cur = curNext;
+        }
+        return newHead;
+    }
+
+    //返回中间节点
+    public ListNode middle(){
+        if(this.head == null){
+            System.out.println("空链表");
+            return null;
+        }
+        ListNode fast = this.head;
+        ListNode slow = this.head;
+        while(fast != null&& fast.next != null){
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        return slow;
+    }
+
+    //返回倒数第K个节点
+    public ListNode reciprocalK(int k){
+        if(k <= 0 ||this.head == null){
+            return null;
+        }
+        ListNode fast = this.head;
+        ListNode slow = this.head;
+        /*while(k - 1 > 0){
+            fast = fast.next;
+            k--;
+        }
+        if(fast.next == null){
+            return null;
+        }*/
+        while(k-1>0){
+            if(fast.next != null){
+                fast = fast.next;
+                k--;
+            }
+            else{
+                System.out.println("该节点超出范围");
+                return null;
+            }
+        }
+        while(fast.next != null){
+            fast = fast.next;
+            slow = slow.next;
+        }
+        return slow;
+
+    }
+
+    //以X为基准分割
+    public ListNode partition(int x){
+        if(this.head == null){
+            System.out.println("空链表");
+            return null;
+        }
+        ListNode bs = null;
+        ListNode be = null;
+        ListNode as = null;
+        ListNode ae = null;
+        ListNode cur = this.head;
+        while(cur != null){
+            if(cur.data < x){
+                if(bs == null){
+                    bs = cur;
+                    be = cur;
+                }else{
+                    be.next = cur;
+                    be = be.next;
+                }
+            }else{
+                if(as == null){
+                    as = cur;
+                    ae = cur;
+                }else{
+                    ae.next = cur;
+                    ae = ae.next;
+                }
+            }
+            cur = cur.next;
+        }
+        if(bs == null){
+            return as;
+        }
+        be.next = as;
+        if(as != null){
+            ae.next = null;
+        }
+        return bs;
+    }
+
+    //删除重复的节点
+    public ListNode removeRepetition(){
+        if(this.head == null){
+            System.out.println("空链表");
+            return null;
+        }
+        ListNode cur = this.head;
+        ListNode newHead = new ListNode(-1 );
+        ListNode prev = newHead;
+        while(cur !=null){
+            if(cur.next != null&&cur.data == cur.next.data){
+                while(cur.next != null&&cur.data == cur.next.data){
+                    cur = cur.next;
+                }
+                cur = cur.next;
+            }else{
+                prev.next = cur;
+                prev = prev.next;
+                cur = cur.next;
+            }
+        }
+        if(prev.next != null){
+            prev.next = null;
+        }
+        return  newHead.next;
+    }
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*class ListNode{
+    public int data;
+    public ListNode next;
+    public ListNode(int data){
+        this.data = data;
+        this.next = null;
+    }
+}
 class MySingleList {
 
     public ListNode head;
@@ -58,11 +395,11 @@ class MySingleList {
         System.out.println();
     }
 
-    /**
+    *//**
      * 找到 index -1 位置的节点，返回当前节点的引用
      * @param index
      * @return
-     */
+     *//*
     private ListNode searchIndex(int index){
         ListNode prev = this.head;
         int count =0;
@@ -176,6 +513,7 @@ class MySingleList {
         }
         this.head = null;
     }
+}*/
 
 /*    //反转一个单链表(会产生一个新的头节点需要用display1进行打印)
     public ListNode reverseList0(){
@@ -323,6 +661,7 @@ class MySingleList {
 
     }*/
 //逆置要用display1打印
+/*
     public ListNode reversList0(){
         ListNode prev = null;
         ListNode cur = this.head;
@@ -620,3 +959,4 @@ class MySingleList {
 
 
 }
+*/

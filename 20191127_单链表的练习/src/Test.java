@@ -6,7 +6,47 @@
  * Time: 17:14
  */
 public class Test {
-    //给定一个链表，每个节点包含一个额外增加的随机指针，该指针可以指向链表中的任何节点或空节点。
+
+    public static void main(String[] args) {
+        MySingleList mySingleList = new MySingleList();
+        mySingleList.addLast(1);
+        mySingleList.addLast(2);
+        mySingleList.addLast(3);
+        mySingleList.addLast(3);
+        mySingleList.addLast(5);
+        mySingleList.addLast(4);
+        mySingleList.addLast(4);
+
+        mySingleList.display();
+/*        System.out.println(mySingleList.getLength());
+        mySingleList.addIndex(5,12);
+        mySingleList.display();
+        mySingleList.remove(12);
+        mySingleList.display();
+        System.out.println("=================================");
+        ListNode node = mySingleList.removeAllKey(5);
+        mySingleList.display();
+        ListNode head= mySingleList.reverse();
+        mySingleList.display1(head);
+        ListNode node1 = mySingleList.middle();
+        System.out.println(node1.data);
+        ListNode  node = mySingleList.reciprocalK(6);
+        System.out.println(node.data);
+        ListNode node2 = mySingleList.partition(5);
+        mySingleList.display1(node2);*/
+        mySingleList.display1(mySingleList.removeRepetition());
+
+    }
+
+
+
+
+
+
+
+
+
+/*    //给定一个链表，每个节点包含一个额外增加的随机指针，该指针可以指向链表中的任何节点或空节点。
     //要求返回这个链表的深拷贝。
     public static ListNode copyRandomLists(ListNode head){
         if(head == null){
@@ -116,8 +156,8 @@ public class Test {
     //创造相交
     public static void creatCut(ListNode headA,ListNode headB){
         headA.next.next = headB.next.next.next;
-    }
-    public static void main(String[] args) {
+    }*/
+    public static void main1(String[] args) {
         MySingleList mySingleList = new MySingleList();
         mySingleList.addLast(1);
         mySingleList.addLast(3);
@@ -127,7 +167,7 @@ public class Test {
         mySingleList.addLast(11);
         mySingleList.display();
         System.out.println("=======================");
-        mySingleList.display1(copyRandomLists(mySingleList.head));
+
 
  /*        MySingleList mySingleList1 = new MySingleList();
         mySingleList1.addLast(2);
