@@ -358,6 +358,49 @@ class MySingleList{
         return true;
     }
 
+    //判断环
+    public boolean hasCycle(){
+        if(this.head == null){
+            return false;
+        }
+        ListNode fast = this.head;
+        ListNode slow = this.head;
+        while(fast != null&& fast.next != null){
+            fast = fast.next.next;
+            slow = slow.next;
+            if(fast == slow){
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+    public ListNode hasCylce(){
+        if(this.head == null){
+            return null;
+        }
+        ListNode fast = this.head;
+        ListNode slow = this.head;
+        while(fast != null&& fast.next !=null){
+            fast = fast.next.next;
+            slow = slow.next;
+            if(slow == fast){
+                break;
+            }
+        }
+        if(fast == null||fast.next == null){
+            return null;
+        }
+        slow = this.head;
+        while(slow != fast){
+            slow = slow.next;
+            fast = fast.next;
+        }
+        return slow;
+    }
+
+
 
 
 }
