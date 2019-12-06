@@ -323,6 +323,40 @@ class MySingleList{
         return  newHead.next;
     }
 
+    //判断回文
+    public boolean plalindrome(){
+        if(this.head == null){
+            return false;
+        }
+        if(this.head.next == null){
+            return true;
+        }
+        ListNode fast = this.head;
+        ListNode slow = this.head;
+        while(fast != null&&fast.next != null){
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        ListNode cur = slow.next;
+        while(cur != null){
+            ListNode curNext = cur.next;
+            cur.next = slow;
+            slow = cur;
+            cur = curNext;
+        }
+        ListNode head = this.head;
+        while(head != slow){
+            if(head.data != slow.data){
+                return false;
+            }
+            if(head.next == slow){
+                return true;
+            }
+            head = head.next;
+            slow = slow.next;
+        }
+        return true;
+    }
 
 
 

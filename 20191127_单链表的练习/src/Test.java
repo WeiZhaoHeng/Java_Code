@@ -10,14 +10,10 @@ public class Test {
     public static void main(String[] args) {
         MySingleList mySingleList = new MySingleList();
         mySingleList.addLast(1);
-        mySingleList.addLast(2);
-        mySingleList.addLast(3);
-        mySingleList.addLast(3);
-        mySingleList.addLast(5);
-        mySingleList.addLast(4);
-        mySingleList.addLast(4);
+
 
         mySingleList.display();
+        System.out.println(mySingleList.plalindrome());
 /*        System.out.println(mySingleList.getLength());
         mySingleList.addIndex(5,12);
         mySingleList.display();
@@ -33,8 +29,8 @@ public class Test {
         ListNode  node = mySingleList.reciprocalK(6);
         System.out.println(node.data);
         ListNode node2 = mySingleList.partition(5);
-        mySingleList.display1(node2);*/
-        mySingleList.display1(mySingleList.removeRepetition());
+        mySingleList.display1(node2);
+        mySingleList.display1(mySingleList.removeRepetition());*/
 
     }
 
