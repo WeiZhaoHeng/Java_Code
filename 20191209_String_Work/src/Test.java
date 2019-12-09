@@ -10,6 +10,121 @@ import java.util.Scanner;
  */
 public class Test {
 
+    //将字符串进行逆置
+    public static String reverse(String str) {
+        char[] array = str.toCharArray();
+        int left = 0;
+        int right = array.length-1;
+        while (left < right) {
+            char tmp = array[left];
+            array[left] = array[right];
+            array[right] = tmp;
+            left++;
+            right--;
+        }
+        return String.copyValueOf(array);
+    }
+
+    //将 I am student --> student am I
+    //1.先按照" "拆分成多个子字符串
+    //2.将每一个子字符串逆置
+    //3.然后连接再逆置
+    public static String fun2(String str){
+        String[] ret = str.split(" ");
+        for(int i = 0;i < ret.length;i++){
+            ret[i] = reverse(ret[i]);
+        }
+        String newStr = "";
+        for(int i = 0;i < ret.length;i++){
+            if(i == ret.length-1){
+                newStr = newStr+ret[i];
+            }else{
+            newStr = newStr+ret[i]+" ";
+            }
+        }
+        return newStr = reverse(newStr);
+    }
+    public static void main2(String[] args) {
+        System.out.println("请输入一句话：");
+        Scanner scanner = new Scanner(System.in);
+        String str = scanner.nextLine();
+        str  = fun2(str);
+        System.out.println(str);
+    }
+
+
+    //字符串压缩-->aabbccddeeaa===>2a2b2c2d2e2a
+    public static String fun3(String str){
+        if(str == null || str.length() <= 0) {
+            return null;
+        }
+        char ch = str.charAt(0);//a
+        int repCount = 1;//重复出现的次数
+        StringBuilder sb = new StringBuilder();
+        for (int i = 1; i < str.length(); i++) {
+            if(str.charAt(i) == ch) {
+                repCount++;
+            }else {
+                sb.append(repCount).append(ch);//2a
+                //i->
+                ch = str.charAt(i);//b
+                repCount = 1;
+            }
+        }
+        return sb.append(repCount).append(ch).toString();
+    }
+    //aabbccddee
+    public static String fun4(String str){
+        char[] array = str.toCharArray();
+        int a= array.length;
+        int count = 1;
+        String newStr = "";
+        int i = 0;
+        for(;i < a ;i++){
+            if(array[i] == array[i+1]){
+                count =1;
+                while(array[i] == array[i+1]){
+                    count++;
+                    i++;
+                    if(i == a-1){
+                        newStr = newStr+count+array[i];
+                        return newStr;
+                    }
+                }
+            }
+            newStr = newStr+count+array[i];
+        }
+        /*if(array[i] == array[i-1]&&array[i] == array[i-2]){
+            newStr = newStr+count+array[i];
+        }/else{
+            while(i != a){
+                newStr = newStr+count+array[i];
+                i++;
+            }
+        }*/
+/*        while(i+1 != a){
+            if(array[i] == array[i+1]){
+                count =1;
+                while(array[i] == array[i+1]){
+                    i++;
+                    count++;
+                }
+            }
+            newStr = newStr + count + array[i];
+            i++;
+        }*/
+
+        return newStr;
+    }
+    public static void main(String[] args) {
+        String str = "aabbccdddaaa";
+        str = fun4(str);
+        System.out.println(str);
+    }
+
+
+
+
     //合并两个数组并输出有序数组
     public static int[] fun1(int[] arr1,int[] arr2){
         int a = arr1.length+arr2.length;
