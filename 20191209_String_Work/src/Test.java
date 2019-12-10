@@ -10,6 +10,7 @@ import java.util.Scanner;
  */
 public class Test {
 
+
     //将字符串进行逆置
     public static String reverse(String str) {
         char[] array = str.toCharArray();
@@ -34,17 +35,20 @@ public class Test {
         for(int i = 0;i < ret.length;i++){
             ret[i] = reverse(ret[i]);
         }
-        String newStr = "";
+        StringBuilder newStr = new StringBuilder();
         for(int i = 0;i < ret.length;i++){
             if(i == ret.length-1){
-                newStr = newStr+ret[i];
+                //newStr = newStr+ret[i];
+                newStr.append(ret[i]);
             }else{
-            newStr = newStr+ret[i]+" ";
+                // newStr = newStr+ret[i]+" ";
+                newStr.append(ret[i]).append(" ");
             }
         }
-        return newStr = reverse(newStr);
+        String rev = newStr.toString();
+        return rev = reverse(rev);
     }
-    public static void main2(String[] args) {
+    public static void main3(String[] args) {
         System.out.println("请输入一句话：");
         Scanner scanner = new Scanner(System.in);
         String str = scanner.nextLine();
@@ -78,7 +82,8 @@ public class Test {
         char[] array = str.toCharArray();
         int a= array.length;
         int count = 1;
-        String newStr = "";
+        StringBuilder newStr = new StringBuilder();
+        String newStr2 = new String();
         int i = 0;
         for(;i < a ;i++){
             if(array[i] == array[i+1]){
@@ -87,34 +92,18 @@ public class Test {
                     count++;
                     i++;
                     if(i == a-1){
-                        newStr = newStr+count+array[i];
-                        return newStr;
+                        //newStr = newStr+count+array[i];
+                        newStr.append(count).append(array[i]);
+                        newStr2 = newStr.toString();
+                        return newStr2;
                     }
                 }
             }
-            newStr = newStr+count+array[i];
+            //newStr = newStr+count+array[i];
+            newStr.append(count).append(array[i]);
         }
-        /*if(array[i] == array[i-1]&&array[i] == array[i-2]){
-            newStr = newStr+count+array[i];
-        }/else{
-            while(i != a){
-                newStr = newStr+count+array[i];
-                i++;
-            }
-        }*/
-/*        while(i+1 != a){
-            if(array[i] == array[i+1]){
-                count =1;
-                while(array[i] == array[i+1]){
-                    i++;
-                    count++;
-                }
-            }
-            newStr = newStr + count + array[i];
-            i++;
-        }*/
-
-        return newStr;
+        newStr2 = newStr.toString();
+        return newStr2;
     }
     public static void main(String[] args) {
         String str = "aabbccdddaaa";
