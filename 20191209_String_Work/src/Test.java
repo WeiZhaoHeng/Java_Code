@@ -12,7 +12,7 @@ public class Test {
 
 
     //将字符串进行逆置
-    public static String reverse(String str) {
+    public static String reverse1(String str) {
         char[] array = str.toCharArray();
         int left = 0;
         int right = array.length-1;
@@ -33,7 +33,7 @@ public class Test {
     public static String fun2(String str){
         String[] ret = str.split(" ");
         for(int i = 0;i < ret.length;i++){
-            ret[i] = reverse(ret[i]);
+            ret[i] = reverse1(ret[i]);
         }
         StringBuilder newStr = new StringBuilder();
         for(int i = 0;i < ret.length;i++){
@@ -46,44 +46,55 @@ public class Test {
             }
         }
         String rev = newStr.toString();
-        return rev = reverse(rev);
+        return rev = reverse1(rev);
     }
-    public static void main3(String[] args) {
+
+    public static void reverse2(char[] array,int left,int right){
+        while(left < right){
+            char tmp = array[left];
+            array[left] = array[right];
+            array[right] = tmp;
+            left++;
+            right--;
+        }
+    }
+    public static String fun2_1(String str){
+        char[] array = str.toCharArray();
+        int a = array.length;
+        reverse2(array,0,a-1);
+        int i = 0;
+        int j = 0;
+        while(i < array.length){
+            if(array[i] == ' '){
+                i++;
+                j++;
+            } else if(j == array.length||array[j] == ' '){
+                reverse2(array,i,j-1);
+                i = ++j;
+            }else{
+                j++;
+            }
+        }
+
+        return String.copyValueOf(array);
+    }
+
+    public static void main(String[] args) {
         System.out.println("请输入一句话：");
         Scanner scanner = new Scanner(System.in);
         String str = scanner.nextLine();
-        str  = fun2(str);
+        str  = fun2_1(str);
         System.out.println(str);
     }
 
 
-    //字符串压缩-->aabbccddeeaa===>2a2b2c2d2e2a
-    public static String fun3(String str){
-        if(str == null || str.length() <= 0) {
-            return null;
-        }
-        char ch = str.charAt(0);//a
-        int repCount = 1;//重复出现的次数
-        StringBuilder sb = new StringBuilder();
-        for (int i = 1; i < str.length(); i++) {
-            if(str.charAt(i) == ch) {
-                repCount++;
-            }else {
-                sb.append(repCount).append(ch);//2a
-                //i->
-                ch = str.charAt(i);//b
-                repCount = 1;
-            }
-        }
-        return sb.append(repCount).append(ch).toString();
-    }
+
     //aabbccddee
     public static String fun4(String str){
         char[] array = str.toCharArray();
         int a= array.length;
         int count = 1;
         StringBuilder newStr = new StringBuilder();
-        String newStr2 = new String();
         int i = 0;
         for(;i < a ;i++){
             if(array[i] == array[i+1]){
@@ -94,19 +105,39 @@ public class Test {
                     if(i == a-1){
                         //newStr = newStr+count+array[i];
                         newStr.append(count).append(array[i]);
-                        newStr2 = newStr.toString();
-                        return newStr2;
+                        return newStr.toString();
                     }
                 }
             }
             //newStr = newStr+count+array[i];
             newStr.append(count).append(array[i]);
         }
-        newStr2 = newStr.toString();
-        return newStr2;
+        return newStr.toString();
     }
-    public static void main(String[] args) {
-        String str = "aabbccdddaaa";
+
+   public static String fun4_1(String str){
+        if(str == null||str.length() <= 0){
+            return null;
+        }
+        char ch = str.charAt(0);//取0号下标的元素
+        int repCount = 1;//重复出现的次数
+       StringBuilder sb = new StringBuilder();
+       for (int i = 1; i < str.length() ; i++) {
+           if(str.charAt(i) == ch){
+               repCount++;
+           }else{
+               sb.append(repCount).append(ch);
+               ch = str.charAt(i);
+               repCount = 1;
+           }
+       }
+       return sb.append(repCount).append(ch).toString();
+
+
+    }
+
+    public static void main2(String[] args) {
+        String str = "bbaaa";
         str = fun4(str);
         System.out.println(str);
     }
