@@ -1,5 +1,7 @@
 import sun.reflect.generics.tree.Tree;
 
+import java.util.*;
+
 /**
  * Created with IntelliJ IDEA.
  * Description:
@@ -149,6 +151,215 @@ public class BinaryTree {
             return fr;
         }
         return null;
+    }
+
+    //检查两棵树是否相同
+    public boolean isSameTree(TreeNode p ,TreeNode q){
+        //若在相同位置上存在有一个树的节点为空，则不相同返回 false
+        if(p == null&&q != null || p != null&& q == null){
+            return false;
+        }
+        //如果在想用位置上两个树的节点都为空，则相同返回 true
+        if(p == null && q == null){
+            return true;
+        }
+        //若在相同位置上两树的节点都不为空，且他们的值不相等，则不相同返回 false
+        if(p.value != q.value){
+            return false;
+        }
+        //遍历两个树上同一位置的节点
+        return isSameTree(p.left,q.left) && isSameTree(p.right,q.right);
+    }
+
+    //另一颗树的子树
+    /**
+     * 给定两个非空二叉树 s 和 t，检验 s 中是否包含和 t 具有相同结构和节点值的子树。
+     * s 的一个子树包括 s 的一个节点和这个节点的所有子孙。s 也可以看做它自身的一棵子树。
+     * @param s
+     * @param t
+     * @return
+     */
+    public boolean isSubtree(TreeNode s, TreeNode t) {
+        //若有一个空，则返回false
+        if(s == null || t == null){
+            return false;
+        }
+        //判断当前的s与t是否相同
+        if(isSameTree(s,t)){
+            return true;
+        }
+        //判断t是否是当前s.left的子树
+        if(isSubtree(s.left,t)){
+            return true;
+        }
+        //判断t是否是当前s.right的子树
+        if(isSubtree(s.right,t)){
+            return true;
+        }
+        return false;
+    }
+
+    //求二叉树的深度(从根到最远的叶子节点的距离)
+    public int maxDepth(TreeNode root){
+        if(root == null){
+            return 0;
+        }
+        int leftD = maxDepth(root.left);//求左树的高度
+        int rightD = maxDepth(root.right);//求右树的高度
+        return leftD>rightD?leftD+1:rightD+1;
+
+    }
+
+    //平衡二叉树
+    public boolean isBalanced(TreeNode root) {
+        if(root == null){
+            return true;
+        }
+        int leftD = maxDepth(root.left);
+        int rightD = maxDepth(root.right);
+        /*if(Math.abs(leftD-rightD) > 1){//Math.abs()---->求绝对值
+            return false;
+        }
+        return isBalanced(root.left) && isBalanced(root.right);*/
+        return Math.abs(leftD-rightD) <=1 && isBalanced(root.left) && isBalanced(root.right);
+    }
+
+    //对称二叉树
+
+    /**
+     * 1.判断左树与右树书是否为空（同时为空则对称，有一个不为空则不对称，两个都不为空--2）；
+     * 2.判断左树与右树的值是否相等
+     * 3.判断左树的左 == 右树的右 && 左树的右 == 右树的左
+     * @param root
+     * @return
+     */
+    public boolean isSymmetric(TreeNode root) {
+        if(root == null){
+            return true;
+        }
+        return isSymmetricChild(root.left,root.right);
+    }
+
+    public boolean isSymmetricChild(TreeNode leftTree,TreeNode rightTree){
+        //如果有一个为空则对称
+        if((leftTree != null && rightTree == null) || (leftTree == null && rightTree != null)){
+            return false;
+        }
+        //如果两个都为空则对称
+        if(leftTree == null && rightTree == null) {
+            return true;
+        }
+        return leftTree.value == rightTree.value && isSymmetricChild(leftTree.left,rightTree.right)
+                && isSymmetricChild(leftTree.right,rightTree.left);
+    }
+
+
+    //前中后序的非递归实现
+
+    //前序
+
+    /**
+     * 要利用栈来完成
+     * @param root
+     */
+    public void preOrderTraversalNor(TreeNode root){
+        Stack<TreeNode> stack = new Stack<>();//定义一个栈
+        TreeNode cur = root;//定义一个节点来遍历二叉树
+        while(cur != null || !stack.empty()){
+            while(cur != null){
+                stack.push(cur);//入栈
+                System.out.print(cur.value+" ");
+                cur = cur.left;
+            }
+            cur = stack.pop();//出栈
+            cur = cur.right;
+        }
+    }
+
+    //中序
+    public void inOrderTraversalNor(TreeNode root){
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode cur = root;
+        while(cur != null|| !stack.empty()){
+            while(cur != null){
+                stack.push(cur);
+                cur = cur.left;
+            }
+            cur = stack.pop();
+            System.out.print(cur.value);
+            cur = cur.right;
+        }
+    }
+
+    //后序
+    public void postOrderTraversalNor(TreeNode root){
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode cur = root;
+        TreeNode prev = null;
+        while(cur != null|| !stack.empty()){
+            while(cur != null){
+                stack.push(cur);
+                cur = cur.left;
+            }
+            cur = stack.peek();
+            if(cur.right == null || cur.right == prev){
+                stack.pop();
+                System.out.print(cur.value+" ");
+                prev = cur;
+                cur = null;
+            }else{
+                cur = cur.right;
+            }
+        }
+    }
+
+    //层序遍历
+
+    /**
+     * 依赖于队列
+     */
+    public void levelOrderTraversal(TreeNode root){
+        Queue<TreeNode> queue = new LinkedList<>();
+        if(root != null){
+            queue.offer(root);
+        }
+        while(!queue.isEmpty()){
+            TreeNode cur = queue.poll();
+            System.out.print(cur.value+" ");
+            if(cur.left != null) {
+                queue.offer(cur.left);
+            }
+            if(cur.right != null){
+                queue.offer(cur.right);
+            }
+        }
+    }
+
+
+    public List<List<Character>> levelOrder(TreeNode root){
+        List<List<Character>> ret = new ArrayList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        if(root != null){
+            queue.offer(root);
+        }
+        while(!queue.isEmpty()){
+            int size = queue.size();
+            List<Character> list = new ArrayList<>();
+            while(size > 0){
+                TreeNode cur = queue.poll();
+                System.out.println(cur.value+" ");
+                list.add(cur.value);
+                size--;
+                if(cur.left != null){
+                    queue.offer(cur.left);
+                }
+                if(cur.right != null){
+                    queue.offer(cur.right);
+                }
+            }
+            ret.add(list);
+        }
+        return ret;
     }
 
 
