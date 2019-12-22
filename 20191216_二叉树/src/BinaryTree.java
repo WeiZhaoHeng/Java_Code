@@ -361,6 +361,150 @@ public class BinaryTree {
         }
         return ret;
     }
+	
+	    //判断是否是完全二叉树
+    public boolean isCompleteTree(TreeNode root){
+        Queue<TreeNode> queue = new LinkedList<>();
+        if(root != null){
+            queue.offer(root);
+        }
+        while(!queue.isEmpty()){
+            TreeNode cur = queue.poll();
+            if(cur != null){
+                queue.offer(cur.left);
+                queue.offer(cur.right);
+
+            }else{
+                break;
+            }
+        }
+        while(!queue.isEmpty()){
+            TreeNode cur = queue.peek();
+            if(cur != null){
+                return false;
+            }else{
+                queue.poll();
+            }
+        }
+        return true;
+    }
+
+
+    //构建一个二叉树
+    public int i = 0;
+    public TreeNode buildTree(String str){
+        TreeNode root = null;
+        if(str.charAt(i) != '#'){
+            root = new TreeNode(str.charAt(i));
+            i++;
+            root.left = buildTree(str);
+            root.right = buildTree(str);
+
+        }else{
+            i++;
+        }
+        return root;
+    }
+
+    //3. 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先 。
+
+    /**
+     * 根据前序遍历的方式完成
+     * @param root
+     * @param p
+     * @param q
+     * @return
+     */
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q){
+        if(root == null){
+            return null;
+        }
+        if(root == p || root == q){
+            return root;
+        }
+        TreeNode leftTree = lowestCommonAncestor(root.left,p,q);
+        TreeNode rightTree = lowestCommonAncestor(root.right,p,q);
+        if(leftTree != null && rightTree != null){
+            return root;
+        }
+        if(leftTree != null){
+            return leftTree;
+        }
+        if(rightTree != null){
+            return  rightTree;
+        }
+        return null;
+    }
+
+
+
+
+
+    //二叉树搜索树转换成排序双向链表
+    //返回的是双向链表的头结点
+    public TreeNode Convert(TreeNode pRootOfTree) {
+        //这个函数，执行完成后，二叉搜索树的结构已经被改变了
+        ConvertChild(pRootOfTree);
+        TreeNode head = pRootOfTree;
+        //一路向左
+        while (head != null && head.left != null) {
+            head = head.left;
+        }
+        return head;
+    }
+        //用来改变二叉树的结构
+        TreeNode prev = null;
+        public void ConvertChild(TreeNode pCur) {
+            if(pCur == null) {
+                return;
+            }
+            ConvertChild(pCur.left);
+            pCur.left = prev;
+            if(prev != null) {
+                prev.right = pCur;
+            }
+            prev = pCur;
+            ConvertChild(pCur.right);
+        }
+
+    //根据一棵树的前序遍历与中序遍历构造二叉树。
+    public TreeNode buildTree(int[] preorder, int[] inorder){
+            return null;
+    }
+
+
+
+    // 二叉树创建字符串。
+    public void tree2strChild(TreeNode t,StringBuilder sb){
+        if(t == null){
+            return;
+        }
+        sb.append(t.value);
+        if(t.left == null){
+            if(t.right == null){
+                return;
+            }else{
+                sb.append("()");
+            }
+        }else{
+            sb.append("(");
+            tree2strChild(t.left,sb);
+            sb.append(")");
+        }
+
+        if(t.right == null){
+            return;
+        }else{
+            sb.append("(");
+            tree2strChild(t.right,sb);
+            sb.append(")");
+        }
+    }
+    public String tree2str(TreeNode t){
+        StringBuilder sb = new StringBuilder();
+        tree2strChild(t,sb);
+        return sb.toString();
+    }
 
 
 
