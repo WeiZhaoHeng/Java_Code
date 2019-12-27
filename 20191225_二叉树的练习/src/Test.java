@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
  * Created with IntelliJ IDEA.
  * Description:
@@ -6,7 +8,11 @@
  * Time: 16:20
  */
 public class Test {
-    public static void main(String[] args) {
+
+
+
+
+    public static void main1(String[] args) {
         BinaryTree binaryTree = new BinaryTree();
         TreeNode root = binaryTree.buildTree();
         System.out.println(binaryTree.getKLevelSize(root,1));
