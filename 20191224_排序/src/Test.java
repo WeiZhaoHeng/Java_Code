@@ -127,12 +127,12 @@ public class Test {
             int tmp = array[i];
             for( j = i-gap;j >=0 ;j-=gap){
                 if(array[j] > tmp){
-                    array[j+1] = array[j];
+                    array[j+gap] = array[j];
                 }else{
                     break;
                 }
             }
-            array[j+1] = tmp;
+            array[j+gap] = tmp;
         }
     }
 
@@ -164,7 +164,7 @@ public class Test {
         }
         long time1 = System.currentTimeMillis();
         System.out.println(Arrays.toString(array));
-        quickSort(array);
+        shellSort(array);
         long time2 = System.currentTimeMillis();
 
         System.out.println(Arrays.toString(array));
