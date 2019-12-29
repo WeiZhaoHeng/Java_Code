@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.Random;
+import java.util.Stack;
 
 /**
  * Created with IntelliJ IDEA.
@@ -9,6 +10,93 @@ import java.util.Random;
  * Time: 19:15
  */
 public class Test {
+
+    //快速排序
+    public static void quickSort(int[] array){
+        quick2(array,0,array.length-1);
+    }
+    //递归排序
+    public static void quick1(int[] array,int low,int high){
+        if(low >= high){
+            return;
+        }
+        int pivot = partion(array,low,high);
+        quick1(array,low,pivot-1);
+        quick1(array,pivot+1,high);
+    }
+    //非递归排序
+    public static void quick2(int[] array,int low,int high){
+        int pivot = partion(array,low,high);
+        Stack<Integer> stack = new Stack<>();
+        if(pivot > low+1){
+            stack.push(low);
+            stack.push(pivot-1);
+        }
+        if(pivot < high-1){
+            stack.push(pivot+1);
+            stack.push(high);
+        }
+
+        while(!stack.empty()){
+            high = stack.pop();
+            low = stack.pop();
+            pivot = partion(array,low,high);
+            if(pivot > low+1){
+                stack.push(low);
+                stack.push(pivot-1);
+            }
+            if(pivot < high-1){
+                stack.push(pivot+1);
+                stack.push(high);
+            }
+        }
+    }
+    public static int partion(int[] array,int start,int end){
+        int tmp = array[start];
+        while(start < end){
+            while((start < end) && (array[end] >= tmp)){
+                end--;
+            }
+            if(start >= end) {
+                break;
+            }else{
+                array[start] = array[end];
+            }
+
+
+
+            while((start < end) && (array[start] <= tmp)){
+                start++;
+            }
+            if(start >= end){
+                break;
+            }else{
+                array[end] = array[start];
+            }
+        }
+        array[start] = tmp;
+        return start;
+    }
+
+
+
+    //冒泡排序
+    public static void bubbleSort(int[] array){
+        boolean flg = false;
+        for(int i = 0; i < array.length-1;i++){
+            for(int j = 0; j < array.length-1-i;j++){
+                if(array[j] > array[j+1]) {
+                    int tmp = array[j];
+                    array[j] = array[j + 1];
+                    array[j + 1] = array[j];
+                    flg = true;
+                }
+            }
+            if(!flg){
+                break;
+            }
+        }
+    }
 
 
 
@@ -69,14 +157,14 @@ public class Test {
 
 
     public static void main(String[] args) {
-        int[] array = new int[1000];
+        int[] array = new int[10];
         Random random = new Random();
         for (int i = 0; i < array.length ; i++) {
             array[i] = random.nextInt(10000);
         }
         long time1 = System.currentTimeMillis();
         System.out.println(Arrays.toString(array));
-        selectSort(array);
+        quickSort(array);
         long time2 = System.currentTimeMillis();
 
         System.out.println(Arrays.toString(array));
