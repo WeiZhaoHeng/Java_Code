@@ -10,7 +10,7 @@ import java.util.Stack;
  * Time: 13:16
  */
 public class Test {
-    public static void main(String[] args) {
+    public static void main4(String[] args) {
         MyArrayQueue<Integer> myArrayQueue = new MyArrayQueue<>(10);
         myArrayQueue.enQueue(10);
         myArrayQueue.enQueue(11);
